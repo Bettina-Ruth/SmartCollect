@@ -1,0 +1,28 @@
+{
+  "name": "vind",
+  "version": "1.0.0",
+  "description": "\"# SmartCollect\"",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/naren1003/SmartCollect.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/naren1003/SmartCollect/issues"
+  },
+  "homepage": "https://github.com/naren1003/SmartCollect#readme",
+  "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "prisma": "^6.19.3"
+  }
+}

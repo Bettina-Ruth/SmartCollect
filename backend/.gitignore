@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# AI/editor generated folders
+.agents/
+.claude/
+.windsurf/
+
+skills-lock.json
