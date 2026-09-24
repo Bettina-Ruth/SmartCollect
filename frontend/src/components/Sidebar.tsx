@@ -9,7 +9,6 @@ export default function Sidebar() {
         { path: '/dashboard', label: 'Dashboard', icon: Home },
         { path: '/borrowers', label: 'Borrowers', icon: Users },
         { path: '/analytics', label: 'Analytics', icon: BarChart2 },
-        { path: '/chatbot', label: 'Chatbot Demo', icon: MessageSquare },
     ];
 
     return (

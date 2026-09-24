@@ -5,7 +5,6 @@ import Dashboard from './pages/Dashboard';
 import BorrowerList from './pages/BorrowerList';
 import BorrowerDetail from './pages/BorrowerDetail';
 import Analytics from './pages/Analytics';
-import ChatbotView from './pages/ChatbotView';
 
 function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -31,7 +30,6 @@ function App() {
           <Route path="/borrowers" element={<BorrowerList />} />
           <Route path="/borrowers/:id" element={<BorrowerDetail />} />
           <Route path="/analytics" element={<Analytics />} />
-          <Route path="/chatbot" element={<ChatbotView />} />
         </Routes>
       </Layout>
     </Router>

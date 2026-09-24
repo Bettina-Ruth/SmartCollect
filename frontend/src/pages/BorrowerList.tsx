@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Filter, ChevronRight, Download } from 'lucide-react';
+import { Search, Filter, ChevronRight } from 'lucide-react';
 import Card from '../components/Card';
 import Badge from '../components/Badge';
-import { mockApiService } from '../services/api';
+import { apiService } from '../services/api';
 import type { Borrower } from '../services/api';
 import './BorrowerList.css';
 
@@ -18,7 +18,7 @@ export default function BorrowerList() {
     useEffect(() => {
         const fetchBorrowers = async () => {
             try {
-                const data = await mockApiService.getBorrowers();
+                const data = await apiService.getBorrowers();
                 setBorrowers(data);
             } catch (error) {
                 console.error("Failed to fetch borrowers:", error);
@@ -48,12 +48,6 @@ export default function BorrowerList() {
                 <div>
                     <h1 className="page-title">Borrower Directory</h1>
                     <p className="page-subtitle">Manage and track loan portfolios</p>
-                </div>
-                <div className="header-actions">
-                    <button className="btn btn-outline">
-                        <Download size={18} />
-                        Export CSV
-                    </button>
                 </div>
             </div>
 

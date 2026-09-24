@@ -1,51 +1,54 @@
-// Mock data models
+// Data models
+
+export interface Loan {
+    id: string;
+    loanType: string;
+    principalAmount: number;
+    emiAmount: number;
+    outstandingAmount: number;
+    status: 'ACTIVE' | 'CLOSED' | 'DEFAULTED' | 'RESTRUCTURED';
+    payments?: Payment[];
+}
+
+export interface Payment {
+    id: string;
+    amount: number;
+    dueDate: string;
+    paidDate: string | null;
+    status: 'PENDING' | 'PAID' | 'OVERDUE' | 'FAILED';
+}
 
 export interface Borrower {
     id: string;
     name: string;
-    loanType: string;
+    loanType: string | null;
     emiAmount: number;
     riskScore: number;
     riskCategory: 'High' | 'Medium' | 'Low';
     daysPastDue: number;
     recommendedAction: string;
+    loans?: Loan[];
 }
 
-const mockBorrowers: Borrower[] = [
-    { id: 'CUST-8932', name: 'Raj Kumar', loanType: 'Auto Loan', emiAmount: 14500, riskScore: 88, riskCategory: 'High', daysPastDue: 45, recommendedAction: 'Restructure Loan' },
-    { id: 'CUST-1044', name: 'Priya Sharma', loanType: 'Personal', emiAmount: 8200, riskScore: 92, riskCategory: 'High', daysPastDue: 62, recommendedAction: 'Immediate Legal Notice' },
-    { id: 'CUST-5521', name: 'Amit Singh', loanType: 'Home Loan', emiAmount: 32000, riskScore: 45, riskCategory: 'Medium', daysPastDue: 12, recommendedAction: 'Automated Reminder' },
-    { id: 'CUST-9923', name: 'Sneha Patel', loanType: 'Credit Card', emiAmount: 4500, riskScore: 22, riskCategory: 'Low', daysPastDue: 0, recommendedAction: 'No Action Needed' },
-    { id: 'CUST-3841', name: 'Vikram Das', loanType: 'Auto Loan', emiAmount: 11200, riskScore: 78, riskCategory: 'High', daysPastDue: 35, recommendedAction: 'Agent Call' },
-    { id: 'CUST-7742', name: 'Neha Gupta', loanType: 'Personal', emiAmount: 5000, riskScore: 60, riskCategory: 'Medium', daysPastDue: 18, recommendedAction: 'Discount Settlement' },
-    { id: 'CUST-2198', name: 'Rahul Verma', loanType: 'Home Loan', emiAmount: 45000, riskScore: 15, riskCategory: 'Low', daysPastDue: 0, recommendedAction: 'No Action Needed' },
-    { id: 'CUST-6634', name: 'Anjali Desai', loanType: 'Credit Card', emiAmount: 12500, riskScore: 85, riskCategory: 'High', daysPastDue: 50, recommendedAction: 'Agent Call & Legal Warning' }
-];
+const API_URL = 'http://localhost:5001/api';
 
-const API_URL = 'http://localhost:5000/api';
-
-export const mockApiService = {
+export const apiService = {
     getBorrowers: async (): Promise<Borrower[]> => {
-        try {
-            const response = await fetch(`${API_URL}/borrowers`);
-            if (!response.ok) throw new Error('Network error');
-            return await response.json();
-        } catch (error) {
-            console.error('Backend not reachable, falling back to mock data.', error);
-            return new Promise(resolve => setTimeout(() => resolve(mockBorrowers), 600));
+        const response = await fetch(`${API_URL}/borrowers`);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch borrowers: ${response.status}`);
         }
+        return await response.json();
     },
 
     getBorrowerById: async (id: string): Promise<Borrower | undefined> => {
-        try {
-            const response = await fetch(`${API_URL}/borrowers/${id}`);
-            if (!response.ok) throw new Error('Network error');
-            return await response.json();
-        } catch (error) {
-            console.error('Backend not reachable, falling back to mock data.', error);
-            return new Promise(resolve => setTimeout(() => {
-                resolve(mockBorrowers.find(b => b.id === id));
-            }, 400));
+        const response = await fetch(`${API_URL}/borrowers/${id}`);
+        if (response.status === 404) {
+            return undefined;
         }
-    }
+        if (!response.ok) {
+            throw new Error(`Failed to fetch borrower ${id}: ${response.status}`);
+        }
+        return await response.json();
+    },
 };

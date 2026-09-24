@@ -8,6 +8,7 @@ import { Users, AlertTriangle, TrendingDown, DollarSign } from 'lucide-react';
 import Card from '../components/Card';
 import AlertPanel from '../components/AlertPanel';
 import './Dashboard.css';
+import { useNavigate } from 'react-router-dom';
 
 // Mock Data
 const riskDistribution = [
@@ -39,6 +40,7 @@ export default function Dashboard() {
         predictedExposure: '$14.2M',
         recoveryPotential: '68%',
     });
+    const navigate = useNavigate();
 
     return (
         <div className="dashboard-container fade-in">
@@ -48,9 +50,7 @@ export default function Dashboard() {
                     <p className="page-subtitle">AI-Powered Loan Collection & Recovery</p>
                 </div>
                 <div className="date-filter">
-                    <select defaultValue="30">
-                        <option value="7">Last 7 Days</option>
-                        <option value="30">Last 30 Days</option>
+                    <select defaultValue="90">
                         <option value="90">Last Quarter</option>
                     </select>
                 </div>
@@ -61,8 +61,7 @@ export default function Dashboard() {
                     type="critical"
                     title="Critical Risk Escalation"
                     message="145 auto-loan borrowers have shifted to high-risk category in the last 48 hours."
-                    action={{ label: 'View Borrowers', onClick: () => console.log('View') }}
-                />
+                    action={{ label: 'View Borrowers', onClick: () => navigate('/borrowers') }}                />
             </div>
 
             <div className="metrics-grid">
